@@ -1,0 +1,6 @@
+{
+  "latex-workshop.view.pdf.invert": 0.9,
+  "latex-workshop.view.pdf.invertMode.enabled": "auto",
+  "latex-workshop.view.pdf.color.dark.backgroundColor": "#111111",
+  "latex-workshop.view.pdf.color.dark.pageBorderColor": "#333333"
+}
