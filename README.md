@@ -28,7 +28,7 @@ $$
 We know that the radiated power is
 
 $$
-P_{\mathrm{rad}} \propto \left(\frac{L}{\lambda}\right)^2 ]}
+P_{\mathrm{rad}} \propto \left(\frac{L}{\lambda}\right)^2
 $$
 
 This means

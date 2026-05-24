@@ -34,7 +34,8 @@ def clean_inline(text: str) -> str:
 
 
 def convert_math(text: str) -> str:
-    text = re.sub(r"\\tag\*\{.*?\}", "", text, flags=re.DOTALL)
+    text = re.sub(r"\\tag\*\{\[\\ref\{[^{}]*\}\]\}", "", text)
+    text = re.sub(r"\\tag\*\{[^{}]*\}", "", text)
     text = re.sub(r"\\\((.*?)\\\)", lambda m: f"${m.group(1).strip()}$", text, flags=re.DOTALL)
     text = re.sub(r"\\\[(.*?)\\\]", lambda m: f"\n$$\n{m.group(1).strip()}\n$$\n", text, flags=re.DOTALL)
     text = re.sub(
