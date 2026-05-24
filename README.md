@@ -216,12 +216,14 @@ Since EN 61000-6-3 standard also is licence-based, this test report does not cla
 
 **Secondary sources used for practical radiated-emission reference limits.**
 
-| **Frequency range** | **Limit** | **Page / section** | **Source** |
+| {@{}p{0.25\linewidth}p{0.24\linewidth}p{0.16\linewidth}p{0.27\linewidth}@{}} **Frequency range** | **Limit** | **Page** | **Source** |
 | --- | --- | --- | --- |
-| $30\,MHz$ to $230\,MHz$ | $40\,dB\mu V/m$ QP at $3\,m$ | p. 4, standards table | Crouzet official datasheet, IEC 61000-6-3 / IEC 61000-6-4, CISPR 16-2-3 [crouzet_timer_datasheet] |
-| $230\,MHz$ to $1000\,MHz$ | $47\,dB\mu V/m$ QP at $3\,m$ | p. 4, standards table | Crouzet official datasheet, IEC 61000-6-3 / IEC 61000-6-4, CISPR 16-2-3 [crouzet_timer_datasheet] |
-| $30\,MHz$ to $230\,MHz$ | $40\,dB\mu V/m$ QP at $3\,m$ | p. 2, EMC table | OEM Automatic Sweden / Crouzet datasheet, IEC 61000-6-3 / IEC 61000-6-4, CISPR 16-2-3 [oem_crouzet_datasheet] |
-| $230\,MHz$ to $1000\,MHz$ | $47\,dB\mu V/m$ QP at $3\,m$ | p. 2, EMC table | OEM Automatic Sweden / Crouzet datasheet, IEC 61000-6-3 / IEC 61000-6-4, CISPR 16-2-3 [oem_crouzet_datasheet] |
+| $30\,MHz$ to $230\,MHz$ | $40\,dB\mu V/m$ QP at $3\,m$ | p. 8 of 20 | [BK Services, EMC Test Report SuperChrono, EN 61000-6-3:2007, Radiated Emission](https://www.steinertsensingsystems.com/wp-content/uploads/2013/06/Certificate-of-Compliance-CE-FCC-SuperChrono-1.pdf) |
+| $230\,MHz$ to $1000\,MHz$ | $47\,dB\mu V/m$ QP at $3\,m$ | p. 8 of 20 | [BK Services, EMC Test Report SuperChrono, EN 61000-6-3:2007, Radiated Emission](https://www.steinertsensingsystems.com/wp-content/uploads/2013/06/Certificate-of-Compliance-CE-FCC-SuperChrono-1.pdf) |
+| $30\,MHz$ to $230\,MHz$ | $40\,dB\mu V/m$ QP at $3\,m$ | p. 11 of 19 | [CETIM, Essais de compatibilit\'e \'electromagn\'etique, NF EN 61000-6-3, radiated emission limits](https://www.sapv.fr/web/bundles/public/fichiers/7a086ddf41-caracteristiques.pdf) |
+| $230\,MHz$ to $1000\,MHz$ | $47\,dB\mu V/m$ QP at $3\,m$ | p. 11 of 19 | [CETIM, Essais de compatibilit\'e \'electromagn\'etique, NF EN 61000-6-3, radiated emission limits](https://www.sapv.fr/web/bundles/public/fichiers/7a086ddf41-caracteristiques.pdf) |
+
+Based on the secondary sources, it can be inferred that the practical EN 61000-6-3 radiated-emission reference limits at $3\,m$ are $40\,dB\mu V/m$ from $30\,MHz$ to $230\,MHz$, and $47\,dB\mu V/m$ from $230\,MHz$ to $1000\,MHz$, using a quasi-peak detector.
 
 ## Method and measurement plan
 
