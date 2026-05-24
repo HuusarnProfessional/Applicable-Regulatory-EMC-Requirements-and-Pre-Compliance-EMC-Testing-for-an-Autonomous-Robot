@@ -10,33 +10,47 @@ the investigation if significant emissions are found during pre-compliance testi
 
 
 \subsection{Encoders}
-The four AS5600 wheel-position sensors are read using 230 Hz PWM outputs. Each sensor is connected to the mainboard by an approximately 20 cm cable carrying 3.3 V, GND, and PWM. For later EMC analysis, the relevant output parameters from the datasheet~[\ref{ref:as5600-datasheet}] are a PWM slew rate of 0.5 to 2 V/$\mu$s and an output current of 0.5 mA.
-The corresponding rise-time-based frequency estimate is:
-\[
-f_r  = \frac{dV/dt}{3.3} = \frac{0.5 \text{ to } 2}{3.3} = 152 \text{ to } 606~\mathrm{kHz}
-\]
-These values are an indication of the frequency range over which the encoder signal could still have a relevant amplitude.
+The four AS5600 wheel position sensors are read using \(230\,Hz\) PWM outputs. Each
+sensor is connected to the mainboard by an approximately \(20\,cm\) cable carrying
+\(3.3\,V\), GND, and PWM. For later EMC analysis, the relevant output parameters from
+the datasheet~[\ref{ref:as5600-datasheet}] are a PWM slew rate of \(0.5\) to
+\(2\,V/\mu s\) and an output current of \(0.5\,mA\). The corresponding rise-time-based
+frequency estimate is:
 
-The wavelength is:
 \[
-\lambda = \frac{c}{f}
-= \frac{299\,792\,458}{230}
-= 1\,303\,445.47~\mathrm{m}
-\]
-We know that the radiated power is
-\[
-P_{\mathrm{rad}} \propto \left(\frac{L}{\lambda}\right)^2
-\tag*{[\ref{ref:paul-emc}]}
+f_r = \frac{dV/dt}{3.3} =
+\frac{0.5 \text{ to } 2}{3.3}
+= 152 \text{ to } 606\,kHz
 \]
 
-This means
+These values are used as a conservative estimate of the frequency range where the encoder
+signal edges may still have relevant spectral content. The highest value, \(606\,kHz\), is
+therefore used for the cable length comparison instead of only using the \(230\,Hz\) PWM
+repetition frequency.
+
 \[
-P_{\mathrm{rad}} \propto \left(\frac{0.2}{1\,303\,445.47}\right)^2 = 2.35 \times 10^{-14}
+\lambda =
+\frac{c}{f} =
+\frac{299\,792\,458}{606\,000}
+= 494.7\,m
 \]
 
-This is very low, meaning that EMC emissions from the encoder cables are very unlikely.
+For the approximately \(0.2\,m\) encoder cable, the ratio between cable length and
+wavelength is:
+
+\[
+\frac{L}{\lambda} =
+\frac{0.2}{494.7}
+= 4.04 \times 10^{-4}
+\]
+
+This is much smaller than the \(0.1\lambda\) rule of thumb for treating a structure as
+electrically small~[\ref{ref:paul-emc}]. The encoder cable is therefore
+electrically very short even when the edge based frequency estimate is used. This supports
+treating the encoder cables as a low radiated emission risk compared with faster and
+higher current parts of the AGV, such as the H bridge PCBs and motor wiring.
 \subsection{IMU}
-The LSM9DS1 IMU is connected to the mainboard through an SPI interface with a ribbon cable that is at maximum 20cm. In the present design, the SPI clock is set by
+The LSM9DS1 IMU~[\ref{ref:lsm9ds1-datasheet}] is connected to the mainboard through an SPI interface with a ribbon cable that is at maximum 20cm. In the present design, the SPI clock is set by
 \[
 \frac{170~\mathrm{MHz}}{64} = 2.65625~\mathrm{MHz}
 \]
@@ -58,7 +72,7 @@ P_{\mathrm{rad}} \propto \left(\frac{0.2}{112.86}\right)^2 = 3.14 \times 10^{-6}
 The SPI clock frequency is known, but the slew rate of the SPI signals is not currently known. The slew rate must therefore be measured in order to estimate up to which harmonic numbers the SPI interface may still have relevant spectral amplitudes.
 
 \subsection{Ultrasonic}
-The HC-SR04 ultrasonic sensor is connected to the mainboard through VCC, GND, Trigger, and Echo. The Trigger input is a TTL pulse of at least 10~$\mu$s, and the Echo output is a TTL pulse whose width is proportional to the measured distance. The module operates from 5~$\mathrm{V}$ with a typical working current of 15~$\mathrm{mA}$. The 40~$\mathrm{kHz}$ ultrasonic burst is generated internally by the module after the Trigger pulse, rather than being directly carried on the interface cable. The datasheet does not specify the rise time, fall time, or slew rate of the Trigger and Echo signals. For later radiated-EMC analysis, these edge rates must therefore be measured on the implemented hardware.
+The HC-SR04 ultrasonic sensor~[\ref{ref:hc-sr04-datasheet}] is connected to the mainboard through VCC, GND, Trigger, and Echo. The Trigger input is a TTL pulse of at least 10~$\mu$s, and the Echo output is a TTL pulse whose width is proportional to the measured distance. The module operates from 5~$\mathrm{V}$ with a typical working current of 15~$\mathrm{mA}$. The 40~$\mathrm{kHz}$ ultrasonic burst is generated internally by the module after the Trigger pulse, rather than being directly carried on the interface cable. The datasheet~[\ref{ref:hc-sr04-datasheet}] does not specify the rise time, fall time, or slew rate of the Trigger and Echo signals. For later radiated-EMC analysis, these edge rates must therefore be measured on the implemented hardware.
 
 
 
@@ -150,15 +164,15 @@ For a typical \(50\,mm\) mainboard trace this gives:
 = 4.43 \cdot 10^{-4}
 \]
 
-This is far below \(0.1\lambda\), which Paul et al. use as a rule of thumb for when a
-structure can be treated as electrically small~[\ref{ref:paul-emc}]. Therefore, the SPI trace
+This is far below the \(0.1\lambda\) rule of thumb for treating a structure as electrically
+small~[\ref{ref:paul-emc}]. Therefore, the SPI trace
 length itself is not expected to be the dominant radiated-emission problem. The encoder
 PWM, motor PWM logic signal, and UART traces have even lower nominal frequencies,
 so their wavelength-based trace-length risk is lower than the SPI case.
 
-This does not mean that the mainboard layout is irrelevant. Paul et al. also describe that
-digital signals contain high-frequency components depending on rise and fall time, and
-that PCB design must control return paths and loop areas~[\ref{ref:paul-emc}]. Therefore, the
+This does not mean that the mainboard layout is irrelevant. Digital signals contain
+high-frequency components depending on rise and fall time, and PCB design must
+control return paths and loop areas~[\ref{ref:paul-emc}]. Therefore, the
 important mainboard issue is not the nominal frequency alone, but whether the outgoing
 trace and its return current stay close together. If a signal trace crosses a weak or broken
 ground return, the return current must take a longer path. This increases loop area and
@@ -187,13 +201,13 @@ switching current path.
 
 The SW node copper area should be kept small, because it has the fastest voltage
 transitions on the mainboard. The SW node should also be kept away from SPI, UART,
-encoder, UWB, and feedback traces. This follows the PCB EMC guidance in Paul et al.~[\ref{ref:paul-emc}],
+encoder, UWB, and feedback traces. This follows standard PCB EMC guidance~[\ref{ref:paul-emc}],
 where return-current path, ground grid/vias, power distribution, and loop area are treated
 as key layout factors.
 \subsection{H-bridge PCBs}
 The robot uses four separate self designed H bridge PCBs for motor driving. Each full
-bridge is built from two half bridges, using IRS2008S gate drivers and
-IPD220N06L3GATMA1 N channel MOSFETs. The IRS2008S is a high and low side
+bridge is built from two half bridges, using IRS2008S gate drivers~[\ref{ref:irs2008s-datasheet}] and
+IPD220N06L3GATMA1 N channel MOSFETs~[\ref{ref:ipd220n06l3g-datasheet}]. The IRS2008S is a high and low side
 MOSFET driver, while the IPD220N06L3GATMA1 is a 60 V power MOSFET. This makes
 the H bridge PCBs one of the more important EMC risk areas in the AGV, because they
 combine fast gate drive, MOSFET switching, motor current, and external motor wiring.
@@ -208,21 +222,21 @@ The LM2596S-based switching regulator is a purchased buck module used between th
 batteries and the H bridge PCBs and mainboard. Like the LMR36520, the regulator IC
 itself is considered a lower-probability EMC problem than the surrounding power wiring
 and implementation, since it is a commercial regulator IC rather than a self-designed
-switching stage. It is still notable that the module switches at approximately \(150\,kHz\),
+switching stage. It is still notable that the module switches at approximately \(150\,kHz\)~[\ref{ref:lm2596-datasheet}],
 which can create conducted ripple on the supply wiring.
 
 \subsection{STM32-based controller}
 The STM32-based controller uses an STM32G474RE microcontroller. This is a commercial
 microcontroller from STMicroelectronics, not a self-designed digital circuit. According to
-the datasheet, the STM32G474RE can operate at up to \(170\,MHz\). This makes it one of
+the datasheet~[\ref{ref:stm32g474re-datasheet}], the STM32G474RE can operate at up to \(170\,MHz\). This makes it one of
 the highest-frequency digital devices in the AGV, and therefore EMC relevant even though
 the controller itself is not expected to be the same type of emission source as the motor
 drive or switching regulators.
 
 \subsection{ESP32-based controller}
-The ESP32 based controller uses an ESP32 WROOM 32 module. The module contains the
+The ESP32 based controller uses an ESP32 WROOM 32 module~[\ref{ref:esp32-wroom-32-datasheet}]. The module contains the
 ESP32 microcontroller and the RF parts needed for 2.4 GHz WiFi and Bluetooth
-communication. In this project, the ESP32 runs at \(240\,MHz\), which makes it one of
+communication~[\ref{ref:esp32-wroom-32-datasheet}]. In this project, the ESP32 runs at \(240\,MHz\)~[\ref{ref:esp32-wroom-32-datasheet}], which makes it one of
 the highest frequency digital components in the AGV.
 
 The ESP32 is used for Bluetooth communication and for UART communication with the
@@ -238,9 +252,9 @@ the relevant sources for unintentional emissions.
 
 \subsection{LMR36520 buck converter}
 The LMR36520 is a documented commercial synchronous buck regulator from Texas
-Instruments, not a self-designed switching stage. According to the datasheet, it includes
+Instruments, not a self-designed switching stage. According to the datasheet~[\ref{ref:lmr36520-datasheet}], it includes
 integrated high side and low side MOSFETs, internal compensation, and operates as a
-4.2 V to 65 V, 2 A step down converter. The datasheet does not state that the IC itself
+4.2 V to 65 V, 2 A step down converter~[\ref{ref:lmr36520-datasheet}]. The datasheet~[\ref{ref:lmr36520-datasheet}] does not state that the IC itself
 meets EU EMC emission limits, and the responsibility for meeting EMC requirements is
 still on the final AGV product.
 
@@ -252,7 +266,7 @@ the PCB layout around the buck, especially the input loop, SW node, inductor, ou
 capacitors, and return path.
 
 \subsection{DWM1001 UWB module}
-The DWM1001 UWB module is a commercial radio module used for global positioning.
+The DWM1001 UWB module~[\ref{ref:dwm1001-datasheet}] is a commercial radio module used for global positioning.
 Since the regulatory radio part, such as EU RED compliance for the UWB transmitter, is
 outside the scope of this project, the UWB module is not connected during the
 pre-compliance emission measurements.
