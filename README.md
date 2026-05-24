@@ -9,6 +9,8 @@ Electromagnetic compatibility (EMC) is an important consideration when developin
 
 The autonomous robot platform consists of two NiMH batteries connected in series and a control system built around a mainboard, four separate H-bridge PCBs, sensors, and wireless communication modules. An adjustable LM2596S-based switching regulator is connected directly after the batteries and provides the supply for the H bridge PCBs. The mainboard contains an STM32-based controller for motor control and sensor acquisition, an ESP32-based controller for higher-level communication, and an LMR36520 buck converter for the 3.3 V logic supply. The platform also includes a DWM1001 UWB module, an LSM9DS1 IMU, four AS5600 wheel-position sensors, and ultrasonic distance sensors, all of which are connected to the mainboard using ribbon cables.
 
+The following subsections go through the main parts of the AGV and assess whether they may be potential emission sources, or may contribute to EMC problems through wiring, switching behaviour, or coupling paths. The purpose is not to declare compliance at this stage, but to build a basis for the later measurement work and to support the investigation if significant emissions are found during pre-compliance testing.
+
 ### Encoders
 
 The four AS5600 wheel-position sensors are read using 230 Hz PWM outputs. Each sensor is connected to the mainboard by an approximately 20 cm cable carrying 3.3 V, GND, and PWM. For later EMC analysis, the relevant output parameters from the datasheet [ref:as5600-datasheet] are a PWM slew rate of 0.5 to 2 V/$\mu$s and an output current of 0.5 mA. The corresponding rise-time-based frequency estimate is:
