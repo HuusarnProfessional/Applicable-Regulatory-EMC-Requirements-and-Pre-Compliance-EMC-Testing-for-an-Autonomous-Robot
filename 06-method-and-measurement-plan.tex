@@ -11,7 +11,29 @@ is expected to be shorter than \(3\,m\). The results are therefore not treated a
 EN~61000-6-3 results. Instead, the measurements are used as a pre-compliance scan to
 identify possible emission problems. To add margin for the limited setup, all measured
 results should be at least \(6\,dB\) below the practical reference limit. Since the limits are
-given in \(dB\mu V/m\), this corresponds to approximately a factor of two in field strength:
+given in \(dB\mu V/m\), this corresponds to approximately a factor of two in field strength.
+
+The chamber measurements use a peak detector rather than a quasi-peak detector. Peak
+results are therefore not directly equivalent to the quasi-peak limits used in the practical
+reference, but they are still useful for pre-compliance because they conservatively show
+where strong emissions occur.
+
+Because a new measurement setup is not feasible, the borrowed chamber will be used
+with its preset settings. These settings are not necessarily identical to those in the formal
+standard method, and because the chamber is borrowed from Husqvarna, the exact setup
+cannot be disclosed in this report.
+
+The measurement system still covers the relevant radiated-emission frequency range. In
+this project, the practical comparison to the identified EN~61000-6-3 reference limits is
+made over \(30\,MHz\) to \(1\,GHz\).
+
+Because this is a pre-compliance investigation, the purpose is not to declare formal
+pass/fail, but to identify peaks that are close to the practical reference limit. In this
+report, particular attention is therefore given to peaks within \(6\,dB\) of the reference
+limit, or above it. If such peaks are found, the analysis from Section~2 will be used to
+assess which subsystem may be responsible for the emission. If the calculations do not
+clearly suggest the source, a spectral probe can also be used to scan locally over the
+components and look for the same frequency peak near a likely source.
 
 The main selected measurement is radiated emission from the complete AGV. This is
 treated as an enclosure-port measurement, meaning that the robot is evaluated as one
@@ -27,3 +49,4 @@ the measured result represents the complete AGV electronics.
 Two operating modes are planned: standby and running. In standby mode, the AGV
 electronics are powered but the motors are not running. In running mode, the AGV drives
 forward using \texttt{set\_drive\_forward\_mm(x)}.
+
