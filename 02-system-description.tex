@@ -17,32 +17,32 @@ the datasheet~[\ref{ref:as5600-datasheet}] are a PWM slew rate of \(0.5\) to
 \(2\,V/\mu s\) and an output current of \(0.5\,mA\). The corresponding rise-time-based
 frequency estimate is:
 
-\[
+\begin{equation}
 f_r = \frac{dV/dt}{3.3} =
 \frac{0.5 \text{ to } 2}{3.3}
 = 152 \text{ to } 606\,kHz
-\]
+\end{equation}
 
 These values are used as a conservative estimate of the frequency range where the encoder
 signal edges may still have relevant spectral content. The highest value, \(606\,kHz\), is
 therefore used for the cable length comparison instead of only using the \(230\,Hz\) PWM
 repetition frequency.
 
-\[
+\begin{equation}
 \lambda =
 \frac{c}{f} =
 \frac{299\,792\,458}{606\,000}
 = 494.7\,m
-\]
+\end{equation}
 
 For the approximately \(0.2\,m\) encoder cable, the ratio between cable length and
 wavelength is:
 
-\[
+\begin{equation}
 \frac{L}{\lambda} =
 \frac{0.2}{494.7}
 = 4.04 \times 10^{-4}
-\]
+\end{equation}
 
 This is much smaller than the \(0.1\lambda\) rule of thumb for treating a structure as
 electrically small~[\ref{ref:paul-emc}]. The encoder cable is therefore
@@ -51,22 +51,22 @@ treating the encoder cables as a low radiated emission risk compared with faster
 higher current parts of the AGV, such as the H bridge PCBs and motor wiring.
 \subsection{IMU}
 The LSM9DS1 IMU~[\ref{ref:lsm9ds1-datasheet}] is connected to the mainboard through an SPI interface with a ribbon cable that is at maximum 20cm. In the present design, the SPI clock is set by
-\[
+\begin{equation}
 \frac{170~\mathrm{MHz}}{64} = 2.65625~\mathrm{MHz}
-\]
+\end{equation}
 
 The wavelength is
-\[
+\begin{equation}
 \lambda = \frac{c}{f}
 = \frac{299\,792\,458}{2\,656\,250}
 = 112.86~\mathrm{m}
-\]
+\end{equation}
 
 
 This means
-\[
+\begin{equation}
 P_{\mathrm{rad}} \propto \left(\frac{0.2}{112.86}\right)^2 = 3.14 \times 10^{-6} = 3.14~\mu\mathrm{W}
-\]
+\end{equation}
 
 
 The SPI clock frequency is known, but the slew rate of the SPI signals is not currently known. The slew rate must therefore be measured in order to estimate up to which harmonic numbers the SPI interface may still have relevant spectral amplitudes.
@@ -85,23 +85,23 @@ The battery cables can carry relatively large and rapidly changing currents when
 The battery wiring can be approximated as a current loop. If the motor current changes
 quickly, a voltage disturbance is produced by the parasitic inductance of the wiring:
 
-\[
+\begin{equation}
 V_L = L \frac{\mathrm{d}i}{\mathrm{d}t}
-\]
+\end{equation}
 
 For a rough estimate, a straight wire has an inductance in the order of \(1\,\mu\mathrm{H}/\mathrm{m}\). If
 the total battery supply and return path is assumed to be \(0.4\,\mathrm{m}\), the loop inductance is
 approximately:
 
-\[
+\begin{equation}
 L \approx 0.4\,\mu\mathrm{H}
-\]
+\end{equation}
 
 If the motor current changes by \(2\,\mathrm{A}\) in \(1\,\mu\mathrm{s}\), the induced voltage becomes:
 
-\[
+\begin{equation}
 V_L = 0.4\,\mu\mathrm{H} \cdot \frac{2\,\mathrm{A}}{1\,\mu\mathrm{s}} = 0.8\,\mathrm{V}
-\]
+\end{equation}
 
 \subsection{Mainboard}
 
@@ -115,54 +115,54 @@ approximately \(20\,kHz\). The DWM1001 UWB module communicates over UART at
 \(115200\,baud\), and the UART between the ESP32 and STM32 also uses \(115200\,baud\).
 The LSM9DS1 IMU is connected over SPI. In the present design the STM32 SPI clock is:
 
-\[
+\begin{equation}
 f_{SPI} = \frac{170\,MHz}{64} = 2.65625\,MHz
-\]
+\end{equation}
 
 The nominal frequencies are therefore:
 
-\[
+\begin{equation}
 f_{encoder} = 230\,Hz
-\]
+\end{equation}
 
-\[
+\begin{equation}
 f_{motorPWM} = 20\,kHz
-\]
+\end{equation}
 
-\[
+\begin{equation}
 f_{UART} \approx 115.2\,kHz
-\]
+\end{equation}
 
-\[
+\begin{equation}
 f_{SPI} = 2.65625\,MHz
-\]
+\end{equation}
 
 For the mainboard traces themselves, these frequencies are not high enough to make a
 short PCB trace an efficient radiator by length alone. This can be checked using the
 wavelength relation:
 
-\[
+\begin{equation}
 \lambda = \frac{v}{f}
-\]
+\end{equation}
 
 This relation is used when discussing electrical dimensions, where the
 important quantity is conductor length compared with wavelength rather than physical
 length alone. For the highest nominal mainboard signal frequency,
 \(2.65625\,MHz\), the wavelength is:
 
-\[
+\begin{equation}
 \lambda_{SPI} =
 \frac{3 \cdot 10^8}{2.65625 \cdot 10^6}
 = 112.9\,m
-\]
+\end{equation}
 
 For a typical \(50\,mm\) mainboard trace this gives:
 
-\[
+\begin{equation}
 \frac{L}{\lambda} =
 \frac{0.05}{112.9}
 = 4.43 \cdot 10^{-4}
-\]
+\end{equation}
 
 This is far below the \(0.1\lambda\) rule of thumb for treating a structure as electrically
 small~[\ref{ref:paul-emc}]. Therefore, the SPI trace
@@ -188,9 +188,9 @@ input capacitor, the switching path, ground, and back to the input capacitor. Th
 should be kept small, because loop inductance creates voltage disturbance when the current
 changes quickly:
 
-\[
+\begin{equation}
 V_L = L \frac{di}{dt}
-\]
+\end{equation}
 
 For this mainboard, the return path is made with copper pours and several vias instead of
 a continuous ground plane. This makes via placement important, especially around the
@@ -205,18 +205,41 @@ encoder, UWB, and feedback traces. This follows standard PCB EMC guidance~[\ref{
 where return-current path, ground grid/vias, power distribution, and loop area are treated
 as key layout factors.
 \subsection{H-bridge PCBs}
-The robot uses four separate self designed H bridge PCBs for motor driving. Each full
-bridge is built from two half bridges, using IRS2008S gate drivers~[\ref{ref:irs2008s-datasheet}] and
-IPD220N06L3GATMA1 N channel MOSFETs~[\ref{ref:ipd220n06l3g-datasheet}]. The IRS2008S is a high and low side
+The robot uses four separate self-designed H-bridge PCBs for motor driving. Each full
+bridge is built from two half bridges. The design uses IRS2008S gate
+drivers~[\ref{ref:irs2008s-datasheet}] and IPD220N06L3GATMA1 N-channel
+MOSFETs~[\ref{ref:ipd220n06l3g-datasheet}]. The IRS2008S is a high- and low-side
 MOSFET driver, while the IPD220N06L3GATMA1 is a 60 V power MOSFET. This makes
-the H bridge PCBs one of the more important EMC risk areas in the AGV, because they
+the H-bridge PCBs one of the more important EMC risk areas in the AGV, because they
 combine fast gate drive, MOSFET switching, motor current, and external motor wiring.
 
-The motor PWM frequency is approximately \(20\,kHz\). This frequency is not the main
-radiated concern by itself. The larger EMC risk comes from the switching edges and the
-current loop formed by the H bridge, motor cable, motor winding, and return path. These
-loops can create radiated emissions, while the same switching current can also create
-conducted disturbances on the supply wiring.
+The motor PWM frequency is approximately \(20\,kHz\). The larger EMC risk comes from
+the switching edges and the current loop formed by the H-bridge, motor cable, motor
+winding, and return path. These loops can create radiated emissions, while the same
+switching current can also create conducted disturbances on the supply wiring.
+
+According to the IRS2008S datasheet~[\ref{ref:irs2008s-datasheet}], the driver has
+typical source and sink currents of \(290\,mA\) and \(600\,mA\). Under the datasheet
+test conditions, it also gives a typical turn-on rise time of \(70\,ns\) and a typical
+turn-off fall time of \(30\,ns\). Together with the MOSFET data~[\ref{ref:ipd220n06l3g-datasheet}],
+this indicates fast switching rather than slow edge shaping.
+
+A simple edge-time estimate is
+
+\begin{equation}
+f_c \approx \frac{1}{2\pi\tau} = \frac{2.2}{2\pi t_r} \approx \frac{0.35}{t_r}
+\end{equation}
+
+This gives approximately \(5\,MHz\) for \(t_r = 70\,ns\) and approximately
+\(12\,MHz\) for \(t_r = 30\,ns\). The H-bridge can therefore create strong harmonic
+content and ringing well above the \(20\,kHz\) PWM fundamental.
+
+The H-bridge should therefore be treated as a primary suspect if peaks or a raised noise
+floor appear during motor operation and are not present in standby. The most likely
+coupling paths are the motor cables, the battery supply wiring, and the local switching
+current loop on each H-bridge PCB. The actual switch-node \(dV/dt\) still depends on the
+implemented layout, wiring, and loading, and must therefore be confirmed by measurement
+on the implemented H-bridge PCB and its wiring.
 \subsection{LM2596S-based switching regulator}
 The LM2596S-based switching regulator is a purchased buck module used between the
 batteries and the H bridge PCBs and mainboard. Like the LMR36520, the regulator IC

@@ -44,6 +44,12 @@ def convert_math(text: str) -> str:
         text,
         flags=re.DOTALL,
     )
+    text = re.sub(
+        r"\\begin\{equation\}(.*?)\\end\{equation\}",
+        lambda m: f"\n$$\n{m.group(1).strip()}\n$$\n",
+        text,
+        flags=re.DOTALL,
+    )
     return text
 
 
@@ -57,6 +63,23 @@ def strip_latex_wrappers(text: str) -> str:
     text = text.replace("{@{}p{0.30\\linewidth}p{0.32\\linewidth}p{0.32\\linewidth}@{}}", "")
     text = text.replace("{@{}p{0.25\\linewidth}p{0.22\\linewidth}p{0.23\\linewidth}p{0.22\\linewidth}@{}}", "")
     return text
+
+
+def convert_figures(text: str) -> str:
+    def repl(match: re.Match[str]) -> str:
+        body = match.group(1)
+        image_path = extract(r"\\includegraphics(?:\[[^\]]*\])?\{([^{}]*)\}", body)
+        caption = extract(r"\\caption\{(.*?)\}", body)
+
+        parts = []
+        if image_path:
+            alt_text = clean_inline(caption) if caption else pathlib.Path(image_path).stem
+            parts.append(f"![{alt_text}]({image_path})")
+        if caption:
+            parts.append(f"*{clean_inline(caption)}*")
+        return "\n\n" + "\n\n".join(parts) + "\n\n"
+
+    return re.sub(r"\\begin\{figure\}\[H\](.*?)\\end\{figure\}", repl, text, flags=re.DOTALL)
 
 
 def convert_tabular(tabular_text: str) -> str:
@@ -148,6 +171,7 @@ def normalize_paragraphs(text: str) -> str:
 
 def convert_content(text: str) -> str:
     text = convert_math(text)
+    text = convert_figures(text)
     text = convert_tables(text)
     text = convert_enumerate(text)
     text = convert_sections(text)
