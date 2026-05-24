@@ -243,13 +243,29 @@ The AGV is measured in operating modes that are expected to create the highest u
 
 Two operating modes are planned: standby and running. In standby mode, the AGV electronics are powered but the motors are not running. In running mode, the AGV drives forward using \texttt{set_drive_forward_mm(x)}.
 
+This work requires access to the borrowed pre-compliance chamber and measurement time at Husqvarna AB. At the time of writing, that work had not yet been carried out, so Sections 7--9 are limited to the parts that depend on the measurement plan described here.
+
 ## Pre-compliance measurements and results
+
+This section depends on the measurement work described in Section 6 and is therefore left for future work.
+
+\begin{figure}[H]
+
+\includegraphics[width=\linewidth]{figures/radiated_emission_reference_limits.png}
+
+Table: Planned radiated-emission plot format with the practical reference limits and no measured data yet added.
+
+\end{figure}
 
 ## Mitigation actions and evaluation
 
+This section depends on the measurement work described in Section 6 and is therefore left for future work.
+
 ## Discussion
 
-AI-assisted search was used as a support tool for locating possible public secondary sources, since this deviates from the official way of accessing licence-based standards. AI assistance was also used for spelling correction and LaTeX formatting.
+This section depends on the measurement work described in Section 6 and is therefore left for future work.
+
+AI-assisted search was used to help find public secondary sources, since this differs from the official way of accessing licence-based standards. AI was also used for spelling correction and LaTeX formatting.
 
 ## Conclusions and future work
 
