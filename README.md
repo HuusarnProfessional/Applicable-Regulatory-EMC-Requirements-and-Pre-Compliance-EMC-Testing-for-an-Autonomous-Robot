@@ -149,19 +149,19 @@ The SW node copper area should be kept small, because it has the fastest voltage
 
 The robot uses four separate self-designed H-bridge PCBs for motor driving. Each full bridge is built from two half bridges. The design uses IRS2008S gate drivers [ref:irs2008s-datasheet] and IPD220N06L3GATMA1 N-channel MOSFETs [ref:ipd220n06l3g-datasheet]. The IRS2008S is a high- and low-side MOSFET driver, while the IPD220N06L3GATMA1 is a 60 V power MOSFET. This makes the H-bridge PCBs one of the more important EMC risk areas in the AGV, because they combine fast gate drive, MOSFET switching, motor current, and external motor wiring.
 
-The motor PWM frequency is approximately $20\,kHz$. This is useful as the switching repetition rate, but it is not by itself the most useful quantity for later EMC fault searching. The larger EMC risk comes from the switching edges and the current loop formed by the H-bridge, motor cable, motor winding, and return path. These loops can create radiated emissions, while the same switching current can also create conducted disturbances on the supply wiring.
+The motor PWM frequency is approximately $20\,kHz$. The larger EMC risk comes from the switching edges and the current loop formed by the H-bridge, motor cable, motor winding, and return path. These loops can create radiated emissions, while the same switching current can also create conducted disturbances on the supply wiring.
 
-According to the IRS2008S datasheet [ref:irs2008s-datasheet], the driver has typical source and sink currents of $290\,mA$ and $600\,mA$. Under the datasheet test conditions, the same source also gives a typical turn-on rise time of $70\,ns$ and a typical turn-off fall time of $30\,ns$. The MOSFET datasheet [ref:ipd220n06l3g-datasheet] therefore supports the same overall conclusion: this stage is intended for fast switching, not slow edge shaping.
+According to the IRS2008S datasheet [ref:irs2008s-datasheet], the driver has typical source and sink currents of $290\,mA$ and $600\,mA$. Under the datasheet test conditions, it also gives a typical turn-on rise time of $70\,ns$ and a typical turn-off fall time of $30\,ns$. Together with the MOSFET data [ref:ipd220n06l3g-datasheet], this indicates fast switching rather than slow edge shaping.
 
-For later error searching, it is more useful to translate these values into an approximate frequency range than to stop at the component names alone. A simple edge-time estimate is
+A simple edge-time estimate is
 
 $$
-f_{\mathrm{edge}} \approx \frac{0.35}{t_r}
+f_c \approx \frac{1}{2\pi\tau} = \frac{2.2}{2\pi t_r} \approx \frac{0.35}{t_r}
 $$
 
-which gives approximately $5\,MHz$ for $t_r = 70\,ns$ and approximately $12\,MHz$ for $t_r = 30\,ns$. These values do not predict the final chamber result in $dB\mu V/m$, but they do show that the H-bridge can create strong harmonic content and ringing well above the $20\,kHz$ PWM fundamental.
+This gives approximately $5\,MHz$ for $t_r = 70\,ns$ and approximately $12\,MHz$ for $t_r = 30\,ns$. The H-bridge can therefore create strong harmonic content and ringing well above the $20\,kHz$ PWM fundamental.
 
-For the later pre-compliance investigation, this means that the H-bridge should be treated as a primary suspect if peaks or a raised noise floor appear during motor operation and are not present in standby. The most likely coupling paths are the motor cables, the battery supply wiring, and the local switching current loop on each H-bridge PCB. The actual switch-node $dV/dt$ and the resulting emission level still depend on the implemented layout, wiring, and loading, and must therefore be confirmed by measurement on the assembled hardware.
+The H-bridge should therefore be treated as a primary suspect if peaks or a raised noise floor appear during motor operation and are not present in standby. The most likely coupling paths are the motor cables, the battery supply wiring, and the local switching current loop on each H-bridge PCB. The actual switch-node $dV/dt$ still depends on the implemented layout, wiring, and loading, and must therefore be confirmed by measurement on the implemented H-bridge PCB and its wiring.
 
 ### LM2596S-based switching regulator
 
