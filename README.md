@@ -1,4 +1,4 @@
-# Identifying Applicable Regulatory EMC Requirements and Pre-Compliance EMC Testing for an Autonomous Robot
+# Identifying Applicable Regulatory EMC Requirements and Pre-Compliance EMC Testing for an Autonomous Parking Robot
 *Author: Hampus Huus*
 
 ## Introduction
