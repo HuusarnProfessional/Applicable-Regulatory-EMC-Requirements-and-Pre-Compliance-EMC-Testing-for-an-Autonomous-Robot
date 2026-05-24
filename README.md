@@ -255,7 +255,7 @@ The AGV is measured in operating modes that are expected to create the highest u
 
 Two operating modes are planned: standby and running. In standby mode, the AGV electronics are powered but the motors are not running. In running mode, the AGV drives forward using \texttt{set_drive_forward_mm(x)}.
 
-This work requires access to the borrowed pre-compliance chamber and measurement time at Husqvarna AB. At the time of writing, that work had not yet been carried out, so Sections 7--9 are limited to the parts that depend on the measurement plan described here.
+This work requires access to the borrowed pre-compliance chamber and measurement time at Husqvarna AB. At the time of writing, that work had not yet been carried out, so Sections 6--9 are limited to the parts that depend on the measurement plan described here.
 
 ## Pre-compliance measurements and results
 
