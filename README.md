@@ -253,7 +253,7 @@ This section depends on the measurement work described in Section 6 and is there
 
 \includegraphics[width=\linewidth]{figures/radiated_emission_reference_limits.png}
 
-Table: Planned radiated-emission plot format with the practical reference limits and no measured data yet added.
+Table: Planned radiated-emission plot format with the EN 61000-6-3 reference limit, the $6\,dB$ below-limit screening line, and no measured data yet added.
 
 \end{figure}
 
@@ -268,6 +268,8 @@ This section depends on the measurement work described in Section 6 and is there
 AI-assisted search was used to help find public secondary sources, since this differs from the official way of accessing licence-based standards. AI was also used for spelling correction and LaTeX formatting.
 
 ## Conclusions and future work
+
+This section depends on the measurement work described in Section 6 and is therefore left for future work.
 
 ## References
 
