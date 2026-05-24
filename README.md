@@ -35,25 +35,25 @@ This is much smaller than the $0.1\lambda$ rule of thumb for treating a structur
 
 ### IMU
 
-The LSM9DS1 IMU [ref:lsm9ds1-datasheet] is connected to the mainboard through an SPI interface with a ribbon cable that is at maximum 20cm. In the present design, the SPI clock is set by
+The LSM9DS1 IMU [ref:lsm9ds1-datasheet] is connected to the mainboard through an SPI interface with a ribbon cable that is at maximum $20\,cm$. In the present design, the SPI clock is set by:
 
 $$
-\frac{170 \mathrm{MHz}}{64} = 2.65625 \mathrm{MHz}
+f_{SPI} = \frac{170\,MHz}{64} = 2.65625\,MHz
 $$
 
-The wavelength is
+The corresponding wavelength is:
 
 $$
-\lambda = \frac{c}{f} = \frac{299\,792\,458}{2\,656\,250} = 112.86 \mathrm{m}
+\lambda = \frac{c}{f} = \frac{299\,792\,458}{2\,656\,250} = 112.86\,m
 $$
 
-This means
+For the approximately $0.2\,m$ IMU cable, the ratio between cable length and wavelength at the SPI clock frequency is:
 
 $$
-P_{\mathrm{rad}} \propto \left(\frac{0.2}{112.86}\right)^2 = 3.14 \times 10^{-6} = 3.14 \mu\mathrm{W}
+\frac{L}{\lambda} = \frac{0.2}{112.86} = 1.77 \times 10^{-3}
 $$
 
-The SPI clock frequency is known, but the slew rate of the SPI signals is not currently known. The slew rate must therefore be measured in order to estimate up to which harmonic numbers the SPI interface may still have relevant spectral amplitudes.
+The cable is electrically short at the SPI clock frequency. However, the SPI edges can still contain higher frequency components than the clock frequency itself. Since the SPI slew rate is not currently known, it must be measured before the radiated emission risk from the SPI interface can be estimated more accurately.
 
 ### Ultrasonic
 
@@ -61,27 +61,9 @@ The HC-SR04 ultrasonic sensor [ref:hc-sr04-datasheet] is connected to the mainbo
 
 ### Batteries
 
-The platform is powered by two NiMH batteries connected in series. The batteries themselves are not expected to generate high frequency electromagnetic disturbances, since they are not switching circuits. From an EMC perspective, their main importance is instead that they supply the parts of the system that can generate disturbances, especially the motor drive and the switching regulators.
+The platform is powered by two NiMH batteries connected in series. The battery cells are not switching sources themselves and are therefore not treated as an active radiated emission source. The EMC relevance is instead the battery wiring, since it is part of the power path that supplies the H bridge PCBs and switching regulators.
 
-The battery cables can carry relatively large and rapidly changing currents when the motors change speed or direction. These current changes can create conducted voltage drops and current loops in the power wiring. The battery connection is therefore relevant for conducted EMC, even though the batteries themselves are not an active source of switching noise. Bulk capacitance placed close to the regulator and motor drive inputs can reduce these effects by providing a local energy reservoir, thereby reducing the transient current that must flow through the battery leads. However, bulk capacitance does not eliminate the problem completely, and its effectiveness depends on component choice and physical placement.
-
-The battery wiring can be approximated as a current loop. If the motor current changes quickly, a voltage disturbance is produced by the parasitic inductance of the wiring:
-
-$$
-V_L = L \frac{\mathrm{d}i}{\mathrm{d}t}
-$$
-
-For a rough estimate, a straight wire has an inductance in the order of $1\,\mu\mathrm{H}/\mathrm{m}$. If the total battery supply and return path is assumed to be $0.4\,\mathrm{m}$, the loop inductance is approximately:
-
-$$
-L \approx 0.4\,\mu\mathrm{H}
-$$
-
-If the motor current changes by $2\,\mathrm{A}$ in $1\,\mu\mathrm{s}$, the induced voltage becomes:
-
-$$
-V_L = 0.4\,\mu\mathrm{H} \cdot \frac{2\,\mathrm{A}}{1\,\mu\mathrm{s}} = 0.8\,\mathrm{V}
-$$
+For radiated emission, the important factor is whether transient current flows in a large supply loop. Differential mode radiated emission depends on current level, frequency, and loop area $A = Ls$. The battery harness is therefore relevant if the supply and return wiring are separated enough to create a large loop carrying H bridge current transients.
 
 ### Mainboard
 
