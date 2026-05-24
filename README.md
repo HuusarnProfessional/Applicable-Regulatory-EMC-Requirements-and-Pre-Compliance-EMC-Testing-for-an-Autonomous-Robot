@@ -227,6 +227,20 @@ Based on the secondary sources, it can be inferred that the practical EN 61000-6
 
 ## Method and measurement plan
 
+EN 61000-6-3 points to EN 55016-2-3 for the radiated emission test method. However, EN 55016-2-3 is also licence based and can therefore not be used directly in this test report. Since the available setup is a pre-compliance test chamber and not a full or semi anechoic chamber, the measurement will deviate too much from the official method for a detailed investigation of EN 55016-2-3 to be relevant in this project.
+
+The available setup is not a full or semi anechoic chamber, and the measurement distance is expected to be shorter than $3\,m$. The results are therefore not treated as formal EN 61000-6-3 results. Instead, the measurements are used as a pre-compliance scan to identify possible emission problems. To add margin for the limited setup, all measured results should be at least $6\,dB$ below the practical reference limit. Since the limits are given in $dB\mu V/m$, this corresponds to approximately a factor of two in field strength:
+
+$$
+6 = 20 \log_{10}\left(\frac{E_2}{E_1}\right) \Rightarrow \frac{E_2}{E_1} \approx 2
+$$
+
+The main selected measurement is radiated emission from the complete AGV. This is treated as an enclosure-port measurement, meaning that the robot is evaluated as one radiating product including the mainboard, H-bridge PCBs, motor wiring, switching regulators, controllers, and external cables.
+
+The AGV is measured in operating modes that are expected to create the highest unintentional emissions. The most important mode is motor operation, because the self-designed H-bridge PCBs switch motor current and are connected to external motor wiring. The switching regulators and controllers are also active during this mode, so that the measured result represents the complete AGV electronics.
+
+Two operating modes are planned: standby and running. In standby mode, the AGV electronics are powered but the motors are not running. In running mode, the AGV drives forward using \texttt{set_drive_forward_mm(x)}.
+
 ## Pre-compliance measurements and results
 
 ## Mitigation actions and evaluation
