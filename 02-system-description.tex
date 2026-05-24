@@ -44,8 +44,9 @@ wavelength is:
 = 4.04 \times 10^{-4}
 \end{equation}
 
-This is much smaller than the \(0.1\lambda\) rule of thumb for treating a structure as
-electrically small~[\ref{ref:paul-emc}]. The encoder cable is therefore
+This is much smaller than \(0.1\), which is equivalent to the common rule of thumb
+\(L < 0.1\lambda\) for treating a structure as electrically small~[\ref{ref:paul-emc}].
+The encoder cable is therefore
 electrically very short even when the edge based frequency estimate is used. This supports
 treating the encoder cables as a low radiated emission risk compared with faster and
 higher current parts of the AGV, such as the H bridge PCBs and motor wiring.
@@ -162,8 +163,9 @@ For a typical \(50\,mm\) mainboard trace this gives:
 = 4.43 \cdot 10^{-4}
 \end{equation}
 
-This is far below the \(0.1\lambda\) rule of thumb for treating a structure as electrically
-small~[\ref{ref:paul-emc}]. Therefore, the SPI trace
+This is far below \(0.1\), which is equivalent to the common rule of thumb
+\(L < 0.1\lambda\) for treating a structure as electrically small~[\ref{ref:paul-emc}].
+Therefore, the SPI trace
 length itself is not expected to be the dominant radiated-emission problem. The encoder
 PWM, motor PWM logic signal, and UART traces have even lower nominal frequencies,
 so their wavelength-based trace-length risk is lower than the SPI case.
