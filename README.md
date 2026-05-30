@@ -323,9 +323,13 @@ $$
 
 This is approximately $16\,cm$, which is comparable to cable lengths and wiring sections in the AGV. Therefore, a cable does not need to be very long to become an efficient radiating structure at $480\,MHz$. The $480\,MHz$ peak can therefore be interpreted as a possible clock-related disturbance that becomes critical because of the physical AGV implementation, rather than as proof that the ESP32 module alone is the source.
 
-## Mitigation actions and evaluation
+## Mitigating actions
 
-This section depends on the measurement results described in Section 7 and is therefore left for future work.
+### 480 MHz
+
+To mitigate possible coupling between ESP32 clock-related noise and nearby cables, the cables should be routed away from the ESP32 module where possible. Cable lengths should also be reduced where this does not affect the mechanical design, and outgoing and return conductors should be kept close together.
+
+If the intended signal in the cable allows it, a small decoupling capacitor can be placed close to the cable connector. This can provide a local high-frequency return path and reduce the amount of noise that reaches the cable.
 
 ## Discussion
 
