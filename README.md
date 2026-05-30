@@ -221,47 +221,45 @@ Since EN 61000-6-3 is also licence-based, this test report does not claim formal
 
 Based on the secondary sources, it can be inferred that the practical EN 61000-6-3 radiated-emission reference limits at $3\,m$ are $40\,dB\mu V/m$ from $30\,MHz$ to $230\,MHz$, and $47\,dB\mu V/m$ from $230\,MHz$ to $1000\,MHz$, using a quasi-peak detector.
 
-## Method and measurement plan
+## Applied Measurement Limits and Method
 
-EN 61000-6-3 points to EN 55016-2-3 for the radiated emission test method. However, EN 55016-2-3 is also licence based and can therefore not be used directly in this test report. Since the available setup is a pre-compliance test chamber and not a full or semi anechoic chamber, the measurement will deviate too much from the official method for a detailed investigation of EN 55016-2-3 to be relevant in this project.
+Radiated emission from the AGV was measured in an EMC chamber and evaluated against the practical EN 61000-6-3 reference limits identified in Section 4. The chamber measurement followed an established radiated-emission procedure of the type referenced by EN 61000-6-3, namely EN 55016-2-3 / CISPR 16-2-3.
 
-The available setup is not a full or semi anechoic chamber, and the measurement distance is expected to be shorter than $3\,m$. The results are therefore not treated as formal EN 61000-6-3 results. Instead, the measurements are used as a pre-compliance scan to identify possible emission problems. To add margin for the limited setup, all measured results should be at least $6\,dB$ below the practical reference limit. Since the limits are given in $dB\mu V/m$, this corresponds to approximately a factor of two in field strength.
+Radiated emission was evaluated for the complete AGV as an enclosure-port measurement. This means that the mainboard, H-bridge PCBs, motor wiring, switching regulators, controllers, and external cables were treated as one radiating system.
 
-The chamber measurements use a peak detector rather than a quasi-peak detector. Peak results are therefore not directly equivalent to the quasi-peak limits used in the practical reference, but they are still useful for pre-compliance because they conservatively show where strong emissions occur.
+The result is still treated as pre-compliance rather than a formal declaration of conformity. Although the chamber measurement followed the main procedure elements associated with EN 55016-2-3 / CISPR 16-2-3, this report does not document all items normally required for a full compliance report, such as complete calibration data, chamber validation, correction factors, measurement uncertainty, and full laboratory documentation.
 
-Because a new measurement setup is not feasible, the borrowed chamber will be used with its preset settings. These settings are not necessarily identical to those in the formal standard method, and because the chamber is borrowed from Husqvarna, the exact setup cannot be disclosed in this report.
+The practical comparison in this report is made over $30\,MHz$ to $1\,GHz$. The purpose is not to declare formal pass, but to compare the AGV result against the practical reference levels identified in Section 4 and identify frequencies that deserve further investigation.
 
-The measurement system still covers the relevant radiated-emission frequency range. In this project, the practical comparison to the identified EN 61000-6-3 reference limits is made over $30\,MHz$ to $1\,GHz$.
+## Pre-compliance measurements
 
-Because this is a pre-compliance investigation, the purpose is not to declare formal pass/fail, but to identify peaks that are close to the practical reference limit. In this report, particular attention is therefore given to peaks within $6\,dB$ of the reference limit, or above it. If such peaks are found, the analysis from Section 2 will be used to assess which subsystem may be responsible for the emission. If the calculations do not clearly suggest the source, a spectral probe can also be used to scan locally over the components and look for the same frequency peak near a likely source.
+The chamber measurement was carried out at Husqvarna AB in a semi-anechoic chamber at $3\,m$ antenna distance, with the AGV placed on a turntable and raised so that the wheels could spin freely in the air. The receiving antenna was measured in both vertical and horizontal polarisation.
 
-The main selected measurement is radiated emission from the complete AGV. This is treated as an enclosure-port measurement, meaning that the robot is evaluated as one radiating product including the mainboard, H-bridge PCBs, motor wiring, switching regulators, controllers, and external cables.
+A preliminary scan was performed first. During this scan, the turntable was stepped in $45^\circ$ increments. The preliminary scan was carried out for both antenna polarisations and at fixed antenna heights of $1\,m$ and $2\,m$. The frequencies and orientations giving the highest levels were then selected for final measurement.
 
-The AGV is measured in operating modes that are expected to create the highest unintentional emissions. The most important mode is motor operation, because the self-designed H-bridge PCBs switch motor current and are connected to external motor wiring. The switching regulators and controllers are also active during this mode, so that the measured result represents the complete AGV electronics.
+The final measurement used a quasi-peak detector. For the selected frequencies, the AGV was rotated through $360^\circ$ to maximise the received level, and the antenna height was varied from $1\,m$ to $4\,m$. The final quasi-peak measurement used a dwell time of $15\,s$.
 
-Two operating modes are planned: standby and running. In standby mode, the AGV electronics are powered but the motors are not running. In running mode, the AGV drives forward using \texttt{set_drive_forward_mm(x)}.
+The AGV was measured in running mode only, since motor operation was expected to produce the highest unintentional emissions. During the measurement, the AGV was turned on and set to follow a random path to mimic running mode.
 
-This work requires access to the borrowed pre-compliance chamber and measurement time at Husqvarna AB. At the time of writing, that work had not yet been carried out, so Sections 6--9 are limited to the parts that depend on the measurement plan described here.
+## Pre-compliance results
 
-## Pre-compliance measurements and results
+The measured data are not yet processed and presented in this report. This section therefore shows only the intended result format for the radiated-emission comparison.
 
-This section depends on the measurement work described in Section 6 and is therefore left for future work.
+![Planned radiated-emission plot format with the EN 61000-6-3 reference limit and no measured data yet added.](figures/radiated_emission_reference_limits.png)
 
-![Planned radiated-emission plot format with the EN 61000-6-3 reference limit, the $6\,dB$ below-limit screening line, and no measured data yet added.](figures/radiated_emission_reference_limits.png)
-
-*Planned radiated-emission plot format with the EN 61000-6-3 reference limit, the $6\,dB$ below-limit screening line, and no measured data yet added.*
+*Planned radiated-emission plot format with the EN 61000-6-3 reference limit and no measured data yet added.*
 
 ## Mitigation actions and evaluation
 
-This section depends on the measurement work described in Section 6 and is therefore left for future work.
+This section depends on the measurement results described in Section 7 and is therefore left for future work.
 
 ## Discussion
 
-This section depends on the measurement work described in Section 6 and is therefore left for future work.
+This section depends on the measurement results described in Section 7 and is therefore left for future work.
 
 ## Conclusions and future work
 
-This section depends on the measurement work described in Section 6 and is therefore left for future work.
+This section depends on the measurement results described in Section 7 and is therefore left for future work.
 
 ## References
 

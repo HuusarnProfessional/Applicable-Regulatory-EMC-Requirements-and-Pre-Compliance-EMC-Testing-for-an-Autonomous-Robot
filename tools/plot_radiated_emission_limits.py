@@ -8,8 +8,6 @@ import matplotlib.pyplot as plt
 
 LIMIT_BREAKS_MHZ = [30.0, 230.0, 1000.0]
 LIMIT_LEVELS_DBUV_M = [40.0, 47.0, 47.0]
-SCREENING_MARGIN_DB = 6.0
-SCREENING_LEVELS_DBUV_M = [level - SCREENING_MARGIN_DB for level in LIMIT_LEVELS_DBUV_M]
 
 CSV_PATH = Path("measurement_data.csv")
 OUTPUT_PATH = Path("figures/radiated_emission_reference_limits.png")
@@ -51,16 +49,6 @@ def make_plot(csv_path: Path = CSV_PATH, output_path: Path = OUTPUT_PATH) -> Non
         color="tab:red",
         linewidth=2.2,
         label="EN 61000-6-3 reference limit",
-    )
-
-    ax.step(
-        LIMIT_BREAKS_MHZ,
-        SCREENING_LEVELS_DBUV_M,
-        where="post",
-        color="tab:orange",
-        linewidth=2.0,
-        linestyle="--",
-        label="6 dB below limit",
     )
 
     if csv_path.exists():
