@@ -235,19 +235,45 @@ The practical comparison in this report is made over $30\,MHz$ to $1\,GHz$. The 
 
 The chamber measurement was carried out at Husqvarna AB in a semi-anechoic chamber at $3\,m$ antenna distance, with the AGV placed on a turntable and raised so that the wheels could spin freely in the air. The receiving antenna was measured in both vertical and horizontal polarisation.
 
-A preliminary scan was performed first. During this scan, the turntable was stepped in $45^\circ$ increments. The preliminary scan was carried out for both antenna polarisations and at fixed antenna heights of $1\,m$ and $2\,m$. The frequencies and orientations giving the highest levels were then selected for final measurement.
+![Semi-anechoic chamber used for the radiated-emission measurement.](figures/chamber_overview.jpg)
 
-The final measurement used a quasi-peak detector. For the selected frequencies, the AGV was rotated through $360^\circ$ to maximise the received level, and the antenna height was varied from $1\,m$ to $4\,m$. The final quasi-peak measurement used a dwell time of $15\,s$.
+*Semi-anechoic chamber used for the radiated-emission measurement.*
 
-The AGV was measured in running mode only, since motor operation was expected to produce the highest unintentional emissions. During the measurement, the AGV was turned on and set to follow a random path to mimic running mode.
+A preliminary peak scan was performed first in order to identify the most critical frequencies and orientations before the final measurement. During this scan, the turntable was stepped in $45^\circ$ increments. The preliminary scan was carried out for both antenna polarisations and at fixed antenna heights of $1\,m$ and $2\,m$. The frequencies and orientations giving the highest levels were then selected for final measurement.
+
+The final measurement used a quasi-peak detector. For the selected frequencies, the AGV was rotated through $360^\circ$ to maximise the received level, and the antenna height was varied from $1\,m$ to $4\,m$. In this way, the final measurement was taken at the worst-case combination found for each selected emission. The final quasi-peak measurement used a dwell time of $15\,s$.
+
+The AGV was measured in running mode only, since motor operation was expected to produce the highest unintentional emissions. During the measurement, the AGV was turned on and commanded to execute a varying drive pattern intended to mimic running mode.
+
+![AGV placement during the chamber measurement, raised so that the wheels could spin freely.](figures/agv_raised_setup.jpg)
+
+*AGV placement during the chamber measurement, raised so that the wheels could spin freely.*
 
 ## Pre-compliance results
 
-The measured data are not yet processed and presented in this report. This section therefore shows only the intended result format for the radiated-emission comparison.
+The final radiated-emission result is shown in Figure fig:final-radiated-plot. The strongest final quasi-peak point was measured at $480\,MHz$, where the result exceeded the practical reference limit. The selected final results are summarised in Table tab:emi-final-results.
 
-![Planned radiated-emission plot format with the EN 61000-6-3 reference limit and no measured data yet added.](figures/radiated_emission_reference_limits.png)
+![Radiated-emission overview plot exported from the chamber software.](figures/final_radiated_emission_plot.png)
 
-*Planned radiated-emission plot format with the EN 61000-6-3 reference limit and no measured data yet added.*
+*Radiated-emission overview plot exported from the chamber software.*
+
+**EMI final results.**
+
+| {|c|c|c|c|c|c|c|c|c|c|c|c|} \colorbox{orange!25}{\strut Rg} | \colorbox{orange!25}{\strut \shortstack{Frequency |  |  |  |  |  |  |  |  |  |  |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| {[MHz]}}} | \colorbox{orange!25}{\strut \shortstack{QPK Level |  |  |  |  |  |  |  |  |  |  |
+| {[dB$\mu$V/m]}}} | \colorbox{orange!25}{\strut \shortstack{QPK Limit |  |  |  |  |  |  |  |  |  |  |
+| {[dB$\mu$V/m]}}} | \colorbox{orange!25}{\strut \shortstack{QPK Margin |  |  |  |  |  |  |  |  |  |  |
+| {[dB]}}} | \colorbox{orange!25}{\strut \shortstack{Correction |  |  |  |  |  |  |  |  |  |  |
+| {[dB]}}} | \colorbox{orange!25}{\strut Polarization} | \colorbox{orange!25}{\strut \shortstack{Azimuth |  |  |  |  |  |  |  |  |  |
+| {[deg]}}} | \colorbox{orange!25}{\strut \shortstack{Antenna Height |  |  |  |  |  |  |  |  |  |  |
+| {[m]}}} | \colorbox{orange!25}{\strut \shortstack{Meas.\ BW |  |  |  |  |  |  |  |  |  |  |
+| {[kHz]}}} | \colorbox{orange!25}{\strut \shortstack{Meas.\ Time |  |  |  |  |  |  |  |  |  |  |
+| {[s]}}} | \colorbox{orange!25}{\strut \shortstack{Time of |  |  |  |  |  |  |  |  |  |  |
+| Meas.}} |  |  |  |  |  |  |  |  |  |  |  |
+| 1 | 48.810 | 24.24 | 40.46 | \textcolor{green!50!black}{16.22} | 13.26 | V | 276.7 | 2.06 | 120.000 | 15.000 | 16:39:53 |
+| 1 | 105.900 | 35.71 | 40.46 | \textcolor{green!50!black}{4.75} | 11.66 | H | 91 | 2.87 | 120.000 | 15.000 | 16:25:32 |
+| 1 | 480.000 | 53.85 | 47.46 | \textcolor{red}{-6.39} | 18.90 | V | 217.8 | 1.00 | 120.000 | 15.000 | 16:33:06 |
 
 ## Mitigation actions and evaluation
 
