@@ -231,27 +231,33 @@ The result is still treated as pre-compliance rather than a formal declaration o
 
 The practical comparison in this report is made over $30\,MHz$ to $1\,GHz$. The purpose is not to declare formal pass, but to compare the AGV result against the practical reference levels identified in Section 4 and identify frequencies that deserve further investigation.
 
+\clearpage
+
 ## Pre-compliance measurements
 
-The chamber measurement was carried out at Husqvarna AB in a semi-anechoic chamber at $3\,m$ antenna distance, with the AGV placed on a turntable and raised so that the wheels could spin freely in the air. The receiving antenna was measured in both vertical and horizontal polarisation.
-
-![Semi-anechoic chamber used for the radiated-emission measurement.](figures/chamber_overview.jpg)
-
-*Semi-anechoic chamber used for the radiated-emission measurement.*
-
-A preliminary peak scan was performed first in order to identify the most critical frequencies and orientations before the final measurement. During this scan, the turntable was stepped in $45^\circ$ increments. The preliminary scan was carried out for both antenna polarisations and at fixed antenna heights of $1\,m$ and $2\,m$. The frequencies and orientations giving the highest levels were then selected for final measurement.
-
-The final measurement used a quasi-peak detector. For the selected frequencies, the AGV was rotated through $360^\circ$ to maximise the received level, and the antenna height was varied from $1\,m$ to $4\,m$. In this way, the final measurement was taken at the worst-case combination found for each selected emission. The final quasi-peak measurement used a dwell time of $15\,s$.
-
-The AGV was measured in running mode only, since motor operation was expected to produce the highest unintentional emissions. During the measurement, the AGV was turned on and commanded to execute a varying drive pattern intended to mimic running mode.
+The radiated-emission measurement was carried out at Husqvarna AB in a semi-anechoic chamber at $3\,m$ antenna distance. The AGV was placed on the turntable and raised so that the wheels could spin freely in the air, as shown in Figure fig:agv-raised-setup.
 
 ![AGV placement during the chamber measurement, raised so that the wheels could spin freely.](figures/agv_raised_setup.jpg)
 
 *AGV placement during the chamber measurement, raised so that the wheels could spin freely.*
 
+The AGV was measured in running mode only. During the measurement, it was turned on and commanded to follow a random path intended to mimic normal operation.
+
+A preliminary scan was first performed. During this scan, the chamber software displayed both peak and average traces, the receiving antenna was used in both vertical and horizontal polarisation, the turntable was stepped in $45^\circ$ increments, and the measurement was carried out at fixed antenna heights of $1\,m$ and $2\,m$. The frequencies and orientations giving the highest levels were then selected for final measurement.
+
+The final measurement used a quasi-peak detector. For each selected frequency, the AGV was rotated through $360^\circ$ to maximise the received level, and the antenna height was varied from $1\,m$ to $4\,m$. The final quasi-peak result for each selected emission was therefore taken at the worst-case combination found during the maximisation process. Each final quasi-peak measurement was taken for $15\,s$. Figure fig:chamber-overview shows the semi-anechoic chamber used for the measurement.
+
+\begin{figure}[tbp]
+
+\includegraphics[width=0.88\linewidth]{figures/chamber_overview.jpg}
+
+Table: Semi-anechoic chamber used for the radiated-emission measurement.
+
+\end{figure}
+
 ## Pre-compliance results
 
-The final radiated-emission result is shown in Figure fig:final-radiated-plot. The strongest final quasi-peak point was measured at $480\,MHz$, where the result exceeded the practical reference limit. The selected final results are summarised in Table tab:emi-final-results.
+The final radiated-emission result is shown in Figure fig:final-radiated-plot. The plot includes the peak trace, the average trace, the quasi-peak limit, and the selected final quasi-peak points. The strongest final quasi-peak point was measured at $480\,MHz$, where the result exceeded the practical reference limit. The selected final results are summarised in Table tab:emi-final-results.
 
 ![Radiated-emission overview plot exported from the chamber software.](figures/final_radiated_emission_plot.png)
 
