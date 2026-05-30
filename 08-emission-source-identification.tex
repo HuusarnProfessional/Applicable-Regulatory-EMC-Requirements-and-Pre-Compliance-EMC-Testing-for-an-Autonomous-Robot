@@ -1,0 +1,66 @@
+\section{Emission source identification}
+
+The peak detector scan showed several frequencies close to or above the limit line.
+However, a peak detector result does not by itself prove that the final quasi peak result
+will exceed the limit. This can be seen in the final measurement results, where only one
+of the selected frequencies exceeded the limit after quasi peak measurement. Performing
+a full quasi peak measurement at every peak in the spectrum was not feasible within the
+scope of this study. Therefore, the source identification is focused first on the frequency
+that was confirmed to exceed the limit, namely \(480\,MHz\).
+
+\subsection{480 MHz}
+
+The \(480\,MHz\) emission is interesting because it is the second harmonic of \(240\,MHz\),
+
+\[
+480\,\mathrm{MHz} = 2 \cdot 240\,\mathrm{MHz}.
+\]
+
+This is relevant because \(240\,MHz\) is the CPU clock frequency used by the ESP32. The
+spectrum also shows peaks close to \(719\,MHz\) and \(970\,MHz\), which are close to the
+third and fourth harmonics of \(240\,MHz\),
+
+\[
+3 \cdot 240\,\mathrm{MHz} = 720\,\mathrm{MHz},
+\]
+
+\[
+4 \cdot 240\,\mathrm{MHz} = 960\,\mathrm{MHz}.
+\]
+
+There is also a visible peak around \(240\,MHz\) in the average trace, although it is not high
+enough to exceed the limit. This suggests that the \(240\,MHz\) clock family may be present
+in the measured spectrum, but it does not necessarily mean that the ESP32 clock itself is
+the complete problem.
+
+If the ESP32 clock alone was enough to create this level of radiated emission, the same
+problem would likely be common in many products using the same module. It is therefore
+more reasonable to suspect that something in the AGV design allows this clock-related
+energy to couple into a structure that radiates efficiently. This could be a cable, a supply
+path, a ground return path, or another conductive part of the robot platform.
+
+One possible explanation is that one or more cables act as unintended antennas. As the
+frequency increases, the wavelength decreases according to
+
+\[
+\lambda = \frac{c}{f}.
+\]
+
+For \(480\,MHz\) this gives
+
+\[
+\lambda = \frac{3 \cdot 10^8}{480 \cdot 10^6}
+          \approx 0.625\,\mathrm{m}.
+\]
+
+A quarter wavelength is therefore
+
+\[
+\lambda/4 \approx 0.156\,\mathrm{m}.
+\]
+
+This is approximately \(16\,cm\), which is comparable to cable lengths and wiring sections in
+the AGV. Therefore, a cable does not need to be very long to become an efficient
+radiating structure at \(480\,MHz\). The \(480\,MHz\) peak can therefore be interpreted as a
+possible clock-related disturbance that becomes critical because of the physical AGV
+implementation, rather than as proof that the ESP32 module alone is the source.

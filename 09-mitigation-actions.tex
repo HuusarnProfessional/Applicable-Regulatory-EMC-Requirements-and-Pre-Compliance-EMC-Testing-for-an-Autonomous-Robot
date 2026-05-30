@@ -1,0 +1,12 @@
+\section{Mitigating actions}
+
+\subsection{480 MHz}
+To mitigate possible coupling between ESP32 clock-related noise and nearby cables, the
+cables should be routed away from the ESP32 module where possible. Cable lengths should
+also be reduced where this does not affect the mechanical design, and outgoing and return
+conductors should be kept close together.
+
+If the intended signal in the cable allows it, a small decoupling capacitor can be placed
+close to the cable connector. This can provide a local high-frequency return path and
+reduce the amount of noise that reaches the cable.
+
