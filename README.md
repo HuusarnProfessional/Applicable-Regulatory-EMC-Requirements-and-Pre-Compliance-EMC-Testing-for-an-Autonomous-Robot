@@ -7,7 +7,7 @@ Electromagnetic compatibility (EMC) is an important consideration when developin
 
 ## System description and EMC-relevant hardware
 
-The autonomous robot platform(AGV) consists of two NiMH batteries connected in series and a control system built around a mainboard, four separate H-bridge PCBs, sensors, and wireless communication modules. An adjustable LM2596S-based switching regulator is connected directly after the batteries and provides the supply for the H bridge PCBs. The mainboard contains an STM32-based controller for motor control and sensor acquisition, an ESP32-based controller for higher-level communication, and an LMR36520 buck converter for the 3.3 V logic supply. The platform also includes a DWM1001 UWB module, an LSM9DS1 IMU, four AS5600 wheel-position sensors, and ultrasonic distance sensors, all of which are connected to the mainboard using ribbon cables.
+The autonomous robot platform (AGV), as shown in Figure fig:agv-system-overview, consists of two NiMH batteries connected in series and a control system built around a mainboard, four separate H-bridge PCBs, sensors, and wireless communication modules. An adjustable LM2596S-based switching regulator is connected directly after the batteries and provides the supply for the H bridge PCBs. The mainboard contains an STM32-based controller for motor control and sensor acquisition, an ESP32-based controller for higher-level communication, and an LMR36520 buck converter for the 3.3 V logic supply. The platform also includes a DWM1001 UWB module, an LSM9DS1 IMU, four AS5600 wheel-position sensors, and ultrasonic distance sensors, all of which are connected to the mainboard using ribbon cables.
 
 ![System overview of the AGV.](figures/agv_system_overview.png)
 
@@ -235,7 +235,7 @@ The practical comparison in this report is made over $30\,MHz$ to $1\,GHz$. The 
 
 ## Pre-compliance measurements
 
-The radiated-emission measurement was carried out at Husqvarna AB in a semi-anechoic chamber at $3\,m$ antenna distance. The AGV was placed on the turntable and raised so that the wheels could spin freely in the air, as shown in Figure fig:agv-raised-setup.
+The radiated-emission measurement was carried out at Husqvarna AB in a semi-anechoic chamber at $3\,m$ antenna distance, as shown in Figure fig:chamber-overview. The AGV was placed on the turntable and raised so that the wheels could spin freely in the air, as shown in Figure fig:agv-raised-setup.
 
 ![AGV placement during the chamber measurement, raised so that the wheels could spin freely.](figures/agv_raised_setup.jpg)
 
@@ -243,21 +243,17 @@ The radiated-emission measurement was carried out at Husqvarna AB in a semi-anec
 
 The AGV was measured in running mode only. During the measurement, it was turned on and commanded to follow a random path intended to mimic normal operation.
 
-A preliminary scan was first performed. During this scan, the chamber software displayed both peak and average traces, the receiving antenna was used in both vertical and horizontal polarisation, the turntable was stepped in $45^\circ$ increments, and the measurement was carried out at fixed antenna heights of $1\,m$ and $2\,m$. The frequencies and orientations giving the highest levels were then selected for final measurement.
+A preliminary scan was first carried out in order to map the emission behaviour over the measured frequency range and identify which emissions should be followed up in the final measurement. The turntable was stepped in $45^\circ$ increments. At each angle, measurements were taken in both antenna polarisations and at fixed antenna heights of $1\,m$ and $2\,m$, giving 32 measurements in the preliminary scan. This scan produced both peak and average overview traces. The frequencies and orientations giving the highest levels were then selected for final measurement.
 
-The final measurement used a quasi-peak detector. For each selected frequency, the AGV was rotated through $360^\circ$ to maximise the received level, and the antenna height was varied from $1\,m$ to $4\,m$. The final quasi-peak result for each selected emission was therefore taken at the worst-case combination found during the maximisation process. Each final quasi-peak measurement was taken for $15\,s$. Figure fig:chamber-overview shows the semi-anechoic chamber used for the measurement.
+For the final measurement, the receiver was set to quasi-peak detection. Each selected frequency was then evaluated in both antenna polarisations. For each polarisation, the AGV was rotated through $360^\circ$ to find the angle giving the highest level. At that angle, the antenna height was then varied from $1\,m$ to $4\,m$ to find the maximum amplitude. The final quasi-peak result for each selected emission was therefore taken at the worst-case combination of angle, antenna height, and polarisation. Each final quasi-peak measurement was taken for $15\,s$.
 
-\begin{figure}[tbp]
+![Semi-anechoic chamber used for the radiated-emission measurement.](figures/chamber_overview.jpg)
 
-\includegraphics[width=0.88\linewidth]{figures/chamber_overview.jpg}
-
-Table: Semi-anechoic chamber used for the radiated-emission measurement.
-
-\end{figure}
+*Semi-anechoic chamber used for the radiated-emission measurement.*
 
 ## Pre-compliance results
 
-The final radiated-emission result is shown in Figure fig:final-radiated-plot. The plot includes the peak trace, the average trace, the quasi-peak limit, and the selected final quasi-peak points. The strongest final quasi-peak point was measured at $480\,MHz$, where the result exceeded the practical reference limit. The selected final results are summarised in Table tab:emi-final-results.
+The final radiated-emission result is shown in Figure fig:final-radiated-plot. The plot includes the peak trace, the average trace, the quasi-peak limit, and the selected final quasi-peak points. The strongest final quasi-peak point was measured at $480\,MHz$, where the result exceeded the practical reference limit, meaning that the AGV failed the applied EN 61000-6-3 radiated-emission comparison in this pre-compliance measurement. The selected final results for quasi-peak measurement are summarised in Table tab:emi-final-results.
 
 ![Radiated-emission overview plot exported from the chamber software.](figures/final_radiated_emission_plot.png)
 
