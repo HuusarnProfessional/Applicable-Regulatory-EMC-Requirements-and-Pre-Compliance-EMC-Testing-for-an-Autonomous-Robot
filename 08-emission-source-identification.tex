@@ -70,3 +70,39 @@ the AGV. Therefore, a cable does not need to be very long to become an efficient
 radiating structure at \(480\,MHz\). The \(480\,MHz\) peak can therefore be interpreted as a
 possible clock-related disturbance that becomes critical because of the physical AGV
 implementation, rather than as proof that the ESP32 module alone is the source.
+
+\subsection{H-bridge switching edge}
+
+To assess whether the H-bridge could be the dominant source instead, an oscilloscope
+measurement was made at the motor output relative to ground. The measured rise time was
+approximately \(39\,ns\). The measured transition is shown in
+Figure~\ref{fig:hbridge-switch-edge}. Using
+
+\[
+f \approx \frac{0.35}{t_r},
+\]
+
+this corresponds to an edge-related frequency of approximately
+
+\[
+f \approx \frac{0.35}{39 \cdot 10^{-9}} \approx 9\,MHz.
+\]
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.82\linewidth]{figures/hbridge_switch_edge_scope.png}
+\caption{Oscilloscope measurement of the H-bridge motor output relative to ground,
+showing a rise time of approximately \(39\,ns\).}
+\label{fig:hbridge-switch-edge}
+\end{figure}
+
+Since the radiated-emission measurement starts at \(30\,MHz\), this measured transition
+alone does not strongly support the H-bridge as the dominant direct source of the
+observed radiated emission above \(30\,MHz\). This makes the H-bridge less likely than
+first assumed as the main explanation for the measured emissions in the chamber.
+
+However, the H-bridge cannot be excluded. The oscilloscope trace also shows ringing
+after the transition, which indicates that higher-frequency components may still be
+present. In addition, the motor wiring, supply loops, and common-mode coupling can
+still make the H-bridge EMC relevant even if the basic transition time itself points to a
+lower dominant frequency scale.

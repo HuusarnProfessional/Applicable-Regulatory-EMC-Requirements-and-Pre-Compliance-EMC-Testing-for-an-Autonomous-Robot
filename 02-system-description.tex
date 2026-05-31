@@ -231,22 +231,106 @@ test conditions, it also gives a typical turn-on rise time of \(70\,ns\) and a t
 turn-off fall time of \(30\,ns\). Together with the MOSFET data~[\ref{ref:ipd220n06l3g-datasheet}],
 this indicates fast switching rather than slow edge shaping.
 
-A simple edge-time estimate is
+The source and sink current values are EMC relevant because they indicate how quickly
+the driver can charge and discharge the MOSFET gate. In a first approximation, the
+switching time scale depends on gate charge and gate current as
 
 \begin{equation}
-f_c \approx \frac{1}{2\pi\tau} = \frac{2.2}{2\pi t_r} \approx \frac{0.35}{t_r}
+t_{sw} \approx \frac{Q_g}{I_g}
 \end{equation}
 
-This gives approximately \(5\,MHz\) for \(t_r = 70\,ns\) and approximately
-\(12\,MHz\) for \(t_r = 30\,ns\). The H-bridge can therefore create strong harmonic
-content and ringing well above the \(20\,kHz\) PWM fundamental.
+where \(Q_g\) is the MOSFET gate charge and \(I_g\) is the available gate current.
+The turn-on behaviour is mainly linked to the driver source current, while the
+turn-off behaviour is mainly linked to the driver sink current.
 
-The H-bridge should therefore be treated as a primary suspect if peaks or a raised noise
-floor appear during motor operation and are not present in standby. The most likely
-coupling paths are the motor cables, the battery supply wiring, and the local switching
-current loop on each H-bridge PCB. The actual switch-node \(dV/dt\) still depends on the
-implemented layout, wiring, and loading, and must therefore be confirmed by measurement
-on the implemented H-bridge PCB and its wiring.
+For the IPD220N06L3GATMA1, the datasheet gives a typical gate charge of
+\(Q_g \approx 7\,nC\)~[\ref{ref:ipd220n06l3g-datasheet}]. Using the driver source and
+sink currents as a simple first estimate gives
+
+\begin{equation}
+t_{on} \approx \frac{7\,nC}{290\,mA} \approx 24\,ns
+\end{equation}
+
+\begin{equation}
+t_{off} \approx \frac{7\,nC}{600\,mA} \approx 12\,ns
+\end{equation}
+
+Using the same first-order edge-bandwidth estimate as before,
+
+\begin{equation}
+f_c \approx \frac{0.35}{t_r}
+\end{equation}
+
+the simple estimates above correspond to approximately
+
+\begin{equation}
+f_c \approx \frac{0.35}{24\,ns} \approx 15\,MHz
+\end{equation}
+
+\begin{equation}
+f_c \approx \frac{0.35}{12\,ns} \approx 29\,MHz
+\end{equation}
+
+These are simple gate-charge estimates, not the final switch-node rise and fall times
+of the implemented H-bridge. They also do not mean that the H-bridge switches at
+\(15\,MHz\) or \(29\,MHz\). They mean that fast gate charging and discharging can
+support edge-related spectral content in that frequency range.
+
+The available gate current is also influenced by the series resistor in the gate path.
+A larger series gate resistor reduces gate current, increases rise and fall time, and
+lowers the resulting \(dV/dt\) and \(dI/dt\). In the implemented H-bridge, the
+schematic uses \(75\,\Omega\) gate resistors and a \(12\,V\) driver supply. A simple
+effective driver-resistance estimate from the datasheet current values is
+
+\begin{equation}
+R_{driver,on} \approx \frac{12\,V}{290\,mA} \approx 41\,\Omega
+\end{equation}
+
+\begin{equation}
+R_{driver,off} \approx \frac{12\,V}{600\,mA} \approx 20\,\Omega
+\end{equation}
+
+This gives approximate gate currents of
+
+\begin{equation}
+I_{g,on} \approx \frac{12\,V}{41\,\Omega + 75\,\Omega} \approx 0.103\,A
+\end{equation}
+
+\begin{equation}
+I_{g,off} \approx \frac{12\,V}{20\,\Omega + 75\,\Omega} \approx 0.126\,A
+\end{equation}
+
+and therefore
+
+\begin{equation}
+t_{on} \approx \frac{7\,nC}{0.103\,A} \approx 68\,ns
+\end{equation}
+
+\begin{equation}
+t_{off} \approx \frac{7\,nC}{0.126\,A} \approx 56\,ns
+\end{equation}
+
+Using the same edge-bandwidth estimate again gives
+
+\begin{equation}
+f_c \approx \frac{0.35}{68\,ns} \approx 5.1\,MHz
+\end{equation}
+
+\begin{equation}
+f_c \approx \frac{0.35}{56\,ns} \approx 6.3\,MHz
+\end{equation}
+
+These values are still first-order estimates, but they show how the implemented gate
+resistor makes the actual switching slower than the idealised \(24\,ns\) and \(12\,ns\)
+case above. The actual \(dV/dt\), \(dI/dt\), and switch-node behaviour therefore also
+depend on layout, wiring, and load condition.
+
+The simple calculation therefore points to the H-bridge being a less likely direct source
+of the higher-frequency radiated-emission problem considered later in this report. This
+does not exclude the H-bridge from the EMC analysis, because ringing, motor cables, battery supply wiring,
+common-mode coupling, and the local switching current loop can still create higher-frequency
+effects that are not practical to predict accurately with this simple model. Those effects
+must instead be assessed by measurement on the implemented H-bridge PCB and its wiring.
 \subsection{LM2596S-based switching regulator}
 The LM2596S-based switching regulator is a purchased buck module used between the
 batteries and the H bridge PCBs and mainboard. Like the LMR36520, the regulator IC
