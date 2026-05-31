@@ -281,6 +281,8 @@ The final radiated-emission result is shown in Figure fig:final-radiated-plot. T
 
 The peak detector scan showed several frequencies close to or above the limit line. However, a peak detector result does not by itself prove that the final quasi peak result will exceed the limit. This can be seen in the final measurement results, where only one of the selected frequencies exceeded the limit after quasi peak measurement. Performing a full quasi peak measurement at every peak in the spectrum was not feasible within the scope of this study. Therefore, the source identification is focused first on the frequency that was confirmed to exceed the limit, namely $480\,MHz$.
 
+Further identification requires more measurement. If there were more resources to use the chamber, one approach would be to switch off some systems while keeping others on. Another approach would be to use near-field probes with a spectrum analyser, or an amplifier and oscilloscope with FFT function. This would not give an exact $dB\mu V/m$ value, but it would let one sniff out the specific frequency locally on the board.
+
 ### 480 MHz
 
 The $480\,MHz$ emission is interesting because it is the second harmonic of $240\,MHz$,
