@@ -331,13 +331,25 @@ To mitigate possible coupling between ESP32 clock-related noise and nearby cable
 
 If the intended signal in the cable allows it, a small decoupling capacitor can be placed close to the cable connector. This can provide a local high-frequency return path and reduce the amount of noise that reaches the cable.
 
-## Discussion
-
-This section depends on the measurement results described in Section 7 and is therefore left for future work.
-
 ## Conclusions and future work
 
-This section depends on the measurement results described in Section 7 and is therefore left for future work.
+The AGV did not pass the radiated emission pre-compliance measurement, mainly because of the confirmed quasi-peak exceedance at 480 MHz. The peak detector scan also showed several other frequencies close to or above the limit line, but there was not enough time to evaluate all of them with final quasi-peak measurements. These peaks therefore remain possible emission problems that should be investigated in future testing.
+
+This result is understandable for the current prototype. The AGV uses development boards, four separate motor driver PCBs, and many cable connections between the different parts of the system. This increases the chance of common-mode currents, larger current loops, and cables acting as unintended antennas. The result is therefore not unexpected for a prototype that was developed iteratively and was not originally designed as a final EMC-optimised hardware revision.
+
+Further tuning of the current prototype could possibly reduce the emissions, but a new prototype would give more freedom to improve the EMC design. One important improvement would be to replace the development boards with the ESP32 and STM32 integrated directly on the mainboard. This would reduce the physical size compared with the current development-board based design and would also reduce the number of connector interfaces and long signal paths.
+
+The motor drivers are another important improvement area. Since the separate motor driver PCBs have now been tested and shown to work, a future prototype could integrate the motor driver circuits onto the mainboard. In the current prototype, the mainboard and the four separate motor driver PCBs require separate power wiring. This creates several power cable runs in the AGV, which increases the chance that the wiring acts as an unintended antenna. If the motor drivers were integrated onto the mainboard, the power distribution could be handled more locally on the PCB and the number of external power cable runs could be reduced.
+
+The current motor driver PCBs are also limited by the two-layer design. The components are more separated than desired, partly because routing is more constrained on two layers. A four-layer PCB would allow a more continuous ground reference and better power distribution. It would also give more routing freedom, making it possible to place the gate driver, MOSFETs, bootstrap components, and decoupling capacitors closer together. This would reduce trace length in switching paths and improve the return current paths.
+
+The power wiring should also be improved in a future prototype. The existing power cables already have bulk capacitance, but small ceramic capacitors could be placed near critical cable ends where appropriate. This could provide a local high-frequency return path and reduce high-frequency noise on the wiring. Cable length should also be reduced where possible, and supply and return conductors should be routed close together.
+
+Via stitching is already used in the current design, but a four-layer design would make it possible to use it more effectively. More focused via stitching around connectors, regulator areas, switching paths, and board edges could help control return currents and reduce coupling to cables.
+
+Because the current AGV is the result of an iterative development process, the placement of connectors and ports is not optimal for the final system configuration. A new prototype would allow the connectors to be placed according to the actual cable paths, motor driver locations, power distribution, and sensor placement. This would reduce unnecessary cable length and make the EMC design more intentional from the beginning.
+
+Future work should therefore focus on a second hardware revision with the controllers and motor drivers integrated more directly into the main hardware design, a four-layer PCB stackup, shorter and more controlled cable routing, improved high-frequency decoupling, and more deliberate connector placement. After these changes, a new radiated emission measurement should be performed to evaluate whether the critical emissions in the hundreds of megahertz range have been reduced.
 
 ## References
 
