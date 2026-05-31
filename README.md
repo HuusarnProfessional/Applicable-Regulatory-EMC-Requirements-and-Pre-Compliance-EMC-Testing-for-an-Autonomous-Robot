@@ -139,15 +139,85 @@ The motor PWM frequency is approximately $20\,kHz$. The larger EMC risk comes fr
 
 According to the IRS2008S datasheet [ref:irs2008s-datasheet], the driver has typical source and sink currents of $290\,mA$ and $600\,mA$. Under the datasheet test conditions, it also gives a typical turn-on rise time of $70\,ns$ and a typical turn-off fall time of $30\,ns$. Together with the MOSFET data [ref:ipd220n06l3g-datasheet], this indicates fast switching rather than slow edge shaping.
 
-A simple edge-time estimate is
+The source and sink current values are EMC relevant because they indicate how quickly the driver can charge and discharge the MOSFET gate. In a first approximation, the switching time scale depends on gate charge and gate current as
 
 $$
-f_c \approx \frac{1}{2\pi\tau} = \frac{2.2}{2\pi t_r} \approx \frac{0.35}{t_r}
+t_{sw} \approx \frac{Q_g}{I_g}
 $$
 
-This gives approximately $5\,MHz$ for $t_r = 70\,ns$ and approximately $12\,MHz$ for $t_r = 30\,ns$. The H-bridge can therefore create strong harmonic content and ringing well above the $20\,kHz$ PWM fundamental.
+where $Q_g$ is the MOSFET gate charge and $I_g$ is the available gate current. The turn-on behaviour is mainly linked to the driver source current, while the turn-off behaviour is mainly linked to the driver sink current.
 
-The H-bridge should therefore be treated as a primary suspect if peaks or a raised noise floor appear during motor operation and are not present in standby. The most likely coupling paths are the motor cables, the battery supply wiring, and the local switching current loop on each H-bridge PCB. The actual switch-node $dV/dt$ still depends on the implemented layout, wiring, and loading, and must therefore be confirmed by measurement on the implemented H-bridge PCB and its wiring.
+For the IPD220N06L3GATMA1, the datasheet gives a typical gate charge of $Q_g \approx 7\,nC$ [ref:ipd220n06l3g-datasheet]. Using the driver source and sink currents as a simple first estimate gives
+
+$$
+t_{on} \approx \frac{7\,nC}{290\,mA} \approx 24\,ns
+$$
+
+$$
+t_{off} \approx \frac{7\,nC}{600\,mA} \approx 12\,ns
+$$
+
+Using the same first-order edge-bandwidth estimate as before,
+
+$$
+f_c \approx \frac{0.35}{t_r}
+$$
+
+the simple estimates above correspond to approximately
+
+$$
+f_c \approx \frac{0.35}{24\,ns} \approx 15\,MHz
+$$
+
+$$
+f_c \approx \frac{0.35}{12\,ns} \approx 29\,MHz
+$$
+
+These are simple gate-charge estimates, not the final switch-node rise and fall times of the implemented H-bridge. They also do not mean that the H-bridge switches at $15\,MHz$ or $29\,MHz$. They mean that fast gate charging and discharging can support edge-related spectral content in that frequency range.
+
+The available gate current is also influenced by the series resistor in the gate path. A larger series gate resistor reduces gate current, increases rise and fall time, and lowers the resulting $dV/dt$ and $dI/dt$. In the implemented H-bridge, the schematic uses $75\,\Omega$ gate resistors and a $12\,V$ driver supply. A simple effective driver-resistance estimate from the datasheet current values is
+
+$$
+R_{driver,on} \approx \frac{12\,V}{290\,mA} \approx 41\,\Omega
+$$
+
+$$
+R_{driver,off} \approx \frac{12\,V}{600\,mA} \approx 20\,\Omega
+$$
+
+This gives approximate gate currents of
+
+$$
+I_{g,on} \approx \frac{12\,V}{41\,\Omega + 75\,\Omega} \approx 0.103\,A
+$$
+
+$$
+I_{g,off} \approx \frac{12\,V}{20\,\Omega + 75\,\Omega} \approx 0.126\,A
+$$
+
+and therefore
+
+$$
+t_{on} \approx \frac{7\,nC}{0.103\,A} \approx 68\,ns
+$$
+
+$$
+t_{off} \approx \frac{7\,nC}{0.126\,A} \approx 56\,ns
+$$
+
+Using the same edge-bandwidth estimate again gives
+
+$$
+f_c \approx \frac{0.35}{68\,ns} \approx 5.1\,MHz
+$$
+
+$$
+f_c \approx \frac{0.35}{56\,ns} \approx 6.3\,MHz
+$$
+
+These values are still first-order estimates, but they show how the implemented gate resistor makes the actual switching slower than the idealised $24\,ns$ and $12\,ns$ case above. The actual $dV/dt$, $dI/dt$, and switch-node behaviour therefore also depend on layout, wiring, and load condition.
+
+The simple calculation therefore points to the H-bridge being a less likely direct source of the higher-frequency radiated-emission problem considered later in this report. This does not exclude the H-bridge from the EMC analysis, because ringing, motor cables, battery supply wiring, common-mode coupling, and the local switching current loop can still create higher-frequency effects that are not practical to predict accurately with this simple model. Those effects must instead be assessed by measurement on the implemented H-bridge PCB and its wiring.
 
 ### LM2596S-based switching regulator
 
@@ -324,6 +394,28 @@ $$
 $$
 
 This is approximately $16\,cm$, which is comparable to cable lengths and wiring sections in the AGV. Therefore, a cable does not need to be very long to become an efficient radiating structure at $480\,MHz$. The $480\,MHz$ peak can therefore be interpreted as a possible clock-related disturbance that becomes critical because of the physical AGV implementation, rather than as proof that the ESP32 module alone is the source.
+
+### H-bridge switching edge
+
+To assess whether the H-bridge could be the dominant source instead, an oscilloscope measurement was made at the motor output relative to ground. The measured rise time was approximately $39\,ns$. The measured transition is shown in Figure fig:hbridge-switch-edge. Using
+
+$$
+f \approx \frac{0.35}{t_r},
+$$
+
+this corresponds to an edge-related frequency of approximately
+
+$$
+f \approx \frac{0.35}{39 \cdot 10^{-9}} \approx 9\,MHz.
+$$
+
+![Oscilloscope measurement of the H-bridge motor output relative to ground, showing a rise time of approximately $39\,ns$.](figures/hbridge_switch_edge_scope.png)
+
+*Oscilloscope measurement of the H-bridge motor output relative to ground, showing a rise time of approximately $39\,ns$.*
+
+Since the radiated-emission measurement starts at $30\,MHz$, this measured transition alone does not strongly support the H-bridge as the dominant direct source of the observed radiated emission above $30\,MHz$. This makes the H-bridge less likely than first assumed as the main explanation for the measured emissions in the chamber.
+
+However, the H-bridge cannot be excluded. The oscilloscope trace also shows ringing after the transition, which indicates that higher-frequency components may still be present. In addition, the motor wiring, supply loops, and common-mode coupling can still make the H-bridge EMC relevant even if the basic transition time itself points to a lower dominant frequency scale.
 
 ## Mitigating actions
 
