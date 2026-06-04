@@ -67,7 +67,7 @@ The HC-SR04 ultrasonic sensor [ref:hc-sr04-datasheet] is connected to the mainbo
 
 The platform is powered by two NiMH batteries connected in series. The battery cells are not switching sources themselves and are therefore not treated as an active radiated emission source. The EMC relevance is instead the battery wiring, since it is part of the power path that supplies the H bridge PCBs and switching regulators.
 
-For radiated emission, the important factor is whether transient current flows in a large supply loop. Differential mode radiated emission depends on current level, frequency, and loop area $A = Ls$. The battery harness is therefore relevant if the supply and return wiring are separated enough to create a large loop carrying H bridge current transients.
+For radiated emission, the important factor is whether transient current flows in a large supply loop. In differential mode, the outgoing and returning current form a current loop that creates a magnetic field. For a simple two-wire loop, the loop area can be approximated as $A \approx ls$, where $l$ is the loop length and $s$ is the separation between the supply and return conductors. The battery harness is therefore relevant if the supply and return wiring are separated enough to create a large loop carrying H bridge current transients.
 
 ### Mainboard
 
@@ -129,7 +129,7 @@ $$
 
 For this mainboard, the return path is made with copper pours and several vias instead of a continuous ground plane. This makes via placement important, especially around the buck. The input capacitor is placed close to the buck, and the buck ground return to the input capacitor ground through several nearby vias instead of one shared narrow return path. This reduces common impedance and local ground bounce in the switching current path.
 
-The SW node copper area should be kept small, because it has the fastest voltage transitions on the mainboard. The SW node should also be kept away from SPI, UART, encoder, UWB, and feedback traces. This follows standard PCB EMC guidance [ref:paul-emc], where return-current path, ground grid/vias, power distribution, and loop area are treated as key layout factors.
+The SW node, i.e. the switching node between the buck regulator and the inductor, should have a small copper area, because it has the fastest voltage transitions on the mainboard. The SW node should also be kept away from SPI, UART, encoder, UWB, and feedback traces. This follows standard PCB EMC guidance [ref:paul-emc], where return-current path, ground grid/vias, power distribution, and loop area are treated as key layout factors.
 
 ### H-bridge PCBs
 
@@ -173,7 +173,7 @@ $$
 f_c \approx \frac{0.35}{12\,ns} \approx 29\,MHz
 $$
 
-These are simple gate-charge estimates, not the final switch-node rise and fall times of the implemented H-bridge. They also do not mean that the H-bridge switches at $15\,MHz$ or $29\,MHz$. They mean that fast gate charging and discharging can support edge-related spectral content in that frequency range.
+These are simple gate-charge estimates, not the final rise and fall times at the switched output node of the implemented H-bridge of the implemented H-bridge. They also do not mean that the H-bridge switches at $15\,MHz$ or $29\,MHz$. They mean that fast gate charging and discharging can support edge-related spectral content in that frequency range.
 
 The available gate current is also influenced by the series resistor in the gate path. A larger series gate resistor reduces gate current, increases rise and fall time, and lowers the resulting $dV/dt$ and $dI/dt$. In the implemented H-bridge, the schematic uses $75\,\Omega$ gate resistors and a $12\,V$ driver supply. A simple effective driver-resistance estimate from the datasheet current values is
 
@@ -215,7 +215,7 @@ $$
 f_c \approx \frac{0.35}{56\,ns} \approx 6.3\,MHz
 $$
 
-These values are still first-order estimates, but they show how the implemented gate resistor makes the actual switching slower than the idealised $24\,ns$ and $12\,ns$ case above. The actual $dV/dt$, $dI/dt$, and switch-node behaviour therefore also depend on layout, wiring, and load condition.
+These values are still first-order estimates, but they show how the implemented gate resistor makes the actual switching slower than the idealised $24\,ns$ and $12\,ns$ case above. The actual $dV/dt$, $dI/dt$, and switching-node behaviour therefore also depend on layout, wiring, and load condition.
 
 The simple calculation therefore points to the H-bridge being a less likely direct source of the higher-frequency radiated-emission problem considered later in this report. This does not exclude the H-bridge from the EMC analysis, because ringing, motor cables, battery supply wiring, common-mode coupling, and the local switching current loop can still create higher-frequency effects that are not practical to predict accurately with this simple model. Those effects must instead be assessed by measurement on the implemented H-bridge PCB and its wiring.
 
@@ -239,7 +239,7 @@ The radio regulatory part is outside the scope of this report. In the emission a
 
 The LMR36520 is a documented commercial synchronous buck regulator from Texas Instruments, not a self-designed switching stage. According to the datasheet [ref:lmr36520-datasheet], it includes integrated high side and low side MOSFETs, internal compensation, and operates as a 4.2 V to 65 V, 2 A step down converter [ref:lmr36520-datasheet]. The datasheet [ref:lmr36520-datasheet] does not state that the IC itself meets EU EMC emission limits, and the responsibility for meeting EMC requirements is still on the final AGV product.
 
-Nevertheless, since the LMR36520 is a commercial IC from a major semiconductor manufacturer and is intended to be used in many different products, it is reasonable to assume that the IC itself is less likely to be the main EMC problem than the surrounding buck implementation. For this project, the more probable EMC problem areas are therefore the PCB layout around the buck, especially the input loop, SW node, inductor, output capacitors, and return path.
+Nevertheless, since the LMR36520 is a commercial IC from a major semiconductor manufacturer and is intended to be used in many different products, it is reasonable to assume that the IC itself is less likely to be the main EMC problem than the surrounding buck implementation. For this project, the more probable EMC problem areas are therefore the PCB layout around the buck, especially the input loop, switching node, inductor, output capacitors, and return path.
 
 ### DWM1001 UWB module
 
